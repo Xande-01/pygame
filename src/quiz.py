@@ -39,13 +39,13 @@ def processar_eventos_quiz(evento, estado, botao_ia):
             estado["mostrar_dica"] = not estado["mostrar_dica"]
 
     if evento.type == pygame.KEYDOWN:
-        if evento.key == pygame.K_LEFT and estado["indice_atual"] > 0:
-            estado["indice_atual"] -= 1
+        if evento.key == pygame.K_LEFT and estado["pergunta_atual"] > 0:
+            estado["pergunta_atual"] -= 1
             estado["tempo_transicao"] = None   
             estado["mostrar_dica"] = False
 
-        elif evento.key == pygame.K_RIGHT and estado["indice_atual"] < len(estado["perguntas"]) - 1:
-            estado["indice_atual"] += 1
+        elif evento.key == pygame.K_RIGHT and estado["pergunta_atual"] < len(estado["perguntas"]) - 1:
+            estado["pergunta_atual"] += 1
             estado["tempo_transicao"] = None
             estado["mostrar_dica"] = False
 
@@ -59,8 +59,8 @@ def processar_eventos_quiz(evento, estado, botao_ia):
             pygame.K_1: 1, pygame.K_2: 2, pygame.K_3: 3, pygame.K_4: 4, pygame.K_5: 5
         }
         if evento.key in teclas_opcoes:
-            estado["respostas"][estado["indice_atual"]] = teclas_opcoes[evento.key]
-            if estado["indice_atual"] < len(estado["perguntas"]) - 1:
+            estado["respostas"][estado["pergunta_atual"]] = teclas_opcoes[evento.key]
+            if estado["pergunta_atual"] < len(estado["perguntas"]) - 1:
                 estado["tempo_transicao"] = pygame.time.get_ticks()
 
 
@@ -68,7 +68,7 @@ def atualizar_transicao(estado):
     if estado["tempo_transicao"] is not None:
         agora = pygame.time.get_ticks()
         if agora - estado["tempo_transicao"] >= 800:
-            estado["indice_atual"] += 1
+            estado["perguna_atual"] += 1
             estado["tempo_transicao"] = None
             estado["mostrar_dica"] = False
 
@@ -82,7 +82,7 @@ def desenhar_quiz(tela, fonte, estado, botao_ia):
         tela.blit(fonte.render(texto_fim, True, cor), (220, 250))
         return
 
-    indice = estado["indice_atual"]
+    indice = estado["pergunta_atual"]
     pergunta = estado["perguntas"][indice]
     resposta_marcada = estado["respostas"][indice]
 
@@ -114,30 +114,3 @@ def desenhar_quiz(tela, fonte, estado, botao_ia):
     if None not in estado["respostas"]:
         instrucao += " | ENTER: Entregar Prova!"
     tela.blit(fonte.render(instrucao, True, (160, 160, 180)), (30, 505))
-
-
-if __name__ == "__main__":
-    pygame.init()
-    tela = pygame.display.set_mode((900, 550))
-    pygame.display.set_caption("Protótipo do Quiz - Um Dia de Estudante")
-    fonte = pygame.font.SysFont("arial", 20)
-    relogio = pygame.time.Clock()
-
-    perguntas = carregar_perguntas("data/perguntas.json")
-    estado = iniciar_estado_quiz(perguntas)
-    botao_ia = pygame.Rect(800, 450, 60, 45)  
-
-    rodando = True
-    while rodando:
-        for evento in pygame.event.get():
-            if evento.type == pygame.QUIT:
-                rodando = False
-            processar_eventos_quiz(evento, estado, botao_ia)
-
-        atualizar_transicao(estado)
-        desenhar_quiz(tela, fonte, estado, botao_ia)
-
-        pygame.display.flip()
-        relogio.tick(60)
-
-    pygame.quit()
