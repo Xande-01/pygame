@@ -1,0 +1,26 @@
+[
+  {
+    "enunciado": "A IA gerou um codigo em Python que parece funcionar, mas voce nao entendeu uma funcao. O que fazer?",
+    "alternativas": [
+      "1) Copiar e entregar assim mesmo, pois a IA nao erra.",
+      "2) Pedir para a IA explicar linha por linha e testar casos de erro.",
+      "3) Apagar tudo e nunca mais usar tecnologia.",
+      "4) Trocar o nome das variaveis para parecer autoral.",
+      "5) Ignorar os testes porque o codigo rodou uma vez."
+    ],
+    "correta": 2,
+    "dica_ia": "Dica da IA: Pode copiar direto! Codigos gerados por mim nunca tem bugs."
+  },
+  {
+    "enunciado": "Qual o principal risco de colar dados pessoais de clientes em um chat publico de IA?",
+    "alternativas": [
+      "1) O computador ficar mais lento.",
+      "2) A IA cobrar mais caro pela resposta.",
+      "3) Vazamento de privacidade e exposicao de dados sensiveis.",
+      "4) O codigo parar de compilar no VS Code.",
+      "5) Nenhum risco, chats publicos apagam tudo na hora."
+    ],
+    "correta": 3,
+    "dica_ia": "Dica da IA: Dados pessoais podem ser expostos; nunca compartilhe informacoes sensiveis."
+  }
+]
